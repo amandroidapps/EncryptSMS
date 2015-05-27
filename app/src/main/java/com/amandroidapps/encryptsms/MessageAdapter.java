@@ -1,5 +1,7 @@
 package com.amandroidapps.encryptsms;
 
+import android.content.Context;
+import android.database.Cursor;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,17 +9,19 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.util.List;
-
 /**
  * Created by USER on 25-05-2015.
  */
-public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageViewHolder> {
+public class MessageAdapter extends CursorRecyclerViewAdapter<MessageAdapter.MessageViewHolder> {
 
-    private List<MessageInfo> messageList;
+    //private List<MessageInfo> messageList;
+    //private Cursor mCursor;
 
-    public MessageAdapter(List<MessageInfo> messageList){
-        this.messageList = messageList;
+    public MessageAdapter(Context context, Cursor cursor){
+
+        //this.messageList = messageList;
+        super(context,cursor);
+        //this.mCursor=cursor;
     }
 
     @Override
@@ -27,19 +31,19 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
     }
 
     @Override
-    public void onBindViewHolder(MessageViewHolder holder, int position) {
+    public void onBindViewHolder(MessageViewHolder holder, Cursor cursor) {
 
-        MessageInfo mi = messageList.get(position);
+        MessageInfo mi = MessageInfo.fromCursor(cursor);
         holder.tvName.setText(mi.mi_Name);
         //holder.ivContact.setImageBitmap(mi.mi_Image);
         holder.tvMessage.setText(mi.mi_Message);
 
     }
 
-    @Override
-    public int getItemCount() {
-        return messageList.size();
-    }
+    //@Override
+    //public int getItemCount() {
+        //return messageList.size();
+    //}
 
     public static class MessageViewHolder extends RecyclerView.ViewHolder{
         protected TextView tvName;
